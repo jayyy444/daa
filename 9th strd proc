@@ -1,0 +1,36 @@
+DELIMITER //
+CREATE PROCEDURE displayEmployees()
+BEGIN
+    DECLARE done INT DEFAULT 0;
+    DECLARE v_id INT;
+    DECLARE v_name VARCHAR(50);
+    DECLARE v_sal DECIMAL(10,2);
+    
+    DECLARE emp_cursor CURSOR FOR SELECT emp_id, emp_name, salary FROM employee;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
+    
+    OPEN emp_cursor;
+    
+    read_loop: LOOP
+        FETCH emp_cursor INTO v_id, v_name, v_sal;
+        IF done = 1 THEN
+            LEAVE read_loop;
+        END IF;
+        SELECT v_id AS ID, v_name AS Name, v_sal AS Salary;
+    END LOOP;
+    
+    CLOSE emp_cursor;
+END //
+DELIMITER ;
+
+CALL displayEmployees();
+
+-- Procedure with parameter
+DELIMITER //
+CREATE PROCEDURE getEmpByDept(IN d_id INT)
+BEGIN
+    SELECT * FROM employee WHERE dept_id = d_id;
+END //
+DELIMITER ;
+
+CALL getEmpByDept(1);
