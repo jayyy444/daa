@@ -1,0 +1,29 @@
+-- Aggregate Functions
+SELECT COUNT(*) FROM employee;
+SELECT SUM(salary) FROM employee;
+SELECT AVG(salary) FROM employee;
+SELECT MAX(salary) FROM employee;
+SELECT MIN(salary) FROM employee;
+
+-- GROUP BY and HAVING
+SELECT dept_id, COUNT(*) AS total_emp, AVG(salary) AS avg_sal 
+FROM employee GROUP BY dept_id;
+
+SELECT dept_id, AVG(salary) FROM employee GROUP BY dept_id HAVING AVG(salary) > 55000;
+
+-- Set Operations (UNION)
+SELECT emp_name FROM employee WHERE salary > 60000
+UNION
+SELECT emp_name FROM employee WHERE dept_id = 1;
+
+SELECT emp_name FROM employee WHERE salary > 60000
+UNION ALL
+SELECT emp_name FROM employee WHERE dept_id = 1;
+
+-- INTERSECT (MySQL alternative using INNER JOIN)
+SELECT emp_name FROM employee WHERE salary > 50000
+AND emp_name IN (SELECT emp_name FROM employee WHERE dept_id = 1);
+
+-- MINUS / EXCEPT (MySQL alternative)
+SELECT emp_name FROM employee WHERE salary > 50000
+AND emp_name NOT IN (SELECT emp_name FROM employee WHERE dept_id = 2);
