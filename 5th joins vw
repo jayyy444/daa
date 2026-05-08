@@ -1,0 +1,24 @@
+-- INNER JOIN
+SELECT e.emp_name, d.dept_name FROM employee e INNER JOIN department d ON e.dept_id = d.dept_id;
+
+-- LEFT JOIN
+SELECT e.emp_name, d.dept_name FROM employee e LEFT JOIN department d ON e.dept_id = d.dept_id;
+
+-- RIGHT JOIN
+SELECT e.emp_name, d.dept_name FROM employee e RIGHT JOIN department d ON e.dept_id = d.dept_id;
+
+-- CROSS JOIN
+SELECT e.emp_name, d.dept_name FROM employee e CROSS JOIN department d;
+
+-- SELF JOIN
+SELECT a.emp_name, b.emp_name FROM employee a, employee b WHERE a.dept_id = b.dept_id AND a.emp_id <> b.emp_id;
+
+-- VIEW Creation
+CREATE VIEW emp_view AS
+SELECT e.emp_id, e.emp_name, e.salary, d.dept_name 
+FROM employee e JOIN department d ON e.dept_id = d.dept_id;
+
+SELECT * FROM emp_view;
+
+-- Drop View
+DROP VIEW emp_view;
